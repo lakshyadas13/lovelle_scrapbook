@@ -1,4 +1,4 @@
-# ✨ Lovelle Scrapbook
+#  Lovelle Scrapbook
 
 <div align="center">
 
@@ -19,7 +19,7 @@
 
 ---
 
-## 📖 About Lovelle Scrapbook
+##  About Lovelle Scrapbook
 
 **Lovelle Scrapbook** transforms traditional journaling and memory keeping into an interactive, collaborative digital experience. Whether you want to preserve couple milestones, document road trips with friends, maintain a family archive, or keep a private personal journal, Lovelle provides a warm, tactile aesthetic filled with sketchy borders, pastel hues, washi tape, and sticker badges.
 
@@ -27,31 +27,31 @@ Every scrapbook is an isolated collaborative canvas equipped with real-time upda
 
 ---
 
-## 🌟 Key Features
+##  Key Features
 
-### 👥 Multi-Tenant Scrapbooks & Collaboration
+###  Multi-Tenant Scrapbooks & Collaboration
 - **Multiple Scrapbooks:** Create and switch between distinct scrapbooks (e.g., *"Our Journey"*, *"Euro Trip 2026"*, *"Family Archive"*).
 - **Invite Links & Codes:** Share 8-character invite codes to invite partners, friends, or family members.
 - **Role-Based Access Control:** Manage permissions seamlessly with `owner`, `editor`, and `viewer` roles.
 
-### 🎨 Whimsical Doodly Aesthetic
+###  Whimsical Doodly Aesthetic
 - **5 Curated Themes:** Switch between *Pink Doodle*, *Lavender Dreams*, *Vintage Journal*, *Cozy Memories*, and *Minimal Pastel*.
 - **Cute Avatars & Profile Titles:** Personalize your presence with 8 hand-drawn SVG doodle avatars and playful titles (*Chief Memory Keeper*, *Snack Connoisseur*, *Adventure Planner*, etc.).
 - **Tactile UI Elements:** Paper textures, sketchy doodle borders, postcard stamps, washi tape effects, and confetti celebrations.
 
-### 📸 Memory Modules & Tools
-- **🌟 Daily Highlights:** Post daily wins, gratitudes, and photos with author tags and date filters.
-- **💌 Letter Vault & Time Capsules:** Write letters sealed with vintage wax seals and set unlock dates for future time capsules.
-- **📷 Polaroid Timeline:** Clip polaroids to an interactive clothesline rope with handwritten captions, rotation effects, and automatic image compression.
-- **🩹 Things to Work On (Oopsie Jar):** A gentle, collaborative space to log cute quirks, constructive habits, and apologies with resolution tags.
-- **🎯 Plans & Bucket Lists:** Categorized activity checklists with priority flags and checkmark animations.
-- **💖 Appreciation & Cheer Counter:** Real-time synchronized counters to cheer each other on and track collective milestones.
-- **🃏 Customizable Decks:** Interactive flash-card decks for memories, date ideas, or conversation prompts.
-- **⚡ Instant Sandbox Mode:** Works offline with `localStorage` fallbacks if Supabase credentials are not yet configured.
+###  Memory Modules & Tools
+- **Daily Highlights:** Post daily wins, gratitudes, and photos with author tags and date filters.
+- **Letter Vault & Time Capsules:** Write letters sealed with vintage wax seals and set unlock dates for future time capsules.
+- **Polaroid Timeline:** Clip polaroids to an interactive clothesline rope with handwritten captions, rotation effects, and automatic image compression.
+- **Things to Work On (Oopsie Jar):** A gentle, collaborative space to log cute quirks, constructive habits, and apologies with resolution tags.
+- **Plans & Bucket Lists:** Categorized activity checklists with priority flags and checkmark animations.
+- **Appreciation & Cheer Counter:** Real-time synchronized counters to cheer each other on and track collective milestones.
+- **Customizable Decks:** Interactive flash-card decks for memories, date ideas, or conversation prompts.
+- **Instant Sandbox Mode:** Works offline with `localStorage` fallbacks if Supabase credentials are not yet configured.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -66,7 +66,7 @@ Every scrapbook is an isolated collaborative canvas equipped with real-time upda
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### 1. Prerequisites
 - **Node.js** (v18.18 or newer recommended)
@@ -112,7 +112,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## 🗄️ Database & Security
+##  Database & Security
 
 All scrapbook data is protected using PostgreSQL **Row Level Security (RLS)**.
 
@@ -123,7 +123,7 @@ All scrapbook data is protected using PostgreSQL **Row Level Security (RLS)**.
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 lovelle_scrapbook/
@@ -157,7 +157,7 @@ lovelle_scrapbook/
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions, feature ideas, and feedback are welcome!
 1. Fork the Project
@@ -168,6 +168,6 @@ Contributions, feature ideas, and feedback are welcome!
 
 ---
 
-## 📄 License
+##  License
 
 Distributed under the MIT License. See `LICENSE` for more information.
