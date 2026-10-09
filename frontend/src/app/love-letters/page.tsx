@@ -29,18 +29,24 @@ const CATEGORY_MAP = {
     color: 'bg-purple-50 border-purple-200 hover:bg-purple-100/50',
     icon: 'drafts',
     textColor: 'text-purple-700'
+  },
+  celebration: {
+    label: 'Open to celebrate a milestone 🎉',
+    color: 'bg-emerald-50 border-emerald-200 hover:bg-emerald-100/50',
+    icon: 'celebration',
+    textColor: 'text-emerald-700'
   }
 };
 
 export default function LoveLettersPage() {
-  const { currentUser, coupleSettings, loveLetters, addLoveLetter, deleteLoveLetter, isLoading } = useStore();
+  const { currentUser, members, loveLetters, addLoveLetter, deleteLoveLetter, isLoading } = useStore();
   const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState<'vault' | 'write'>('vault');
 
   // Form State
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [category, setCategory] = useState<'sad' | 'miss_me' | 'motivation' | 'general'>('general');
+  const [category, setCategory] = useState<'sad' | 'miss_me' | 'motivation' | 'celebration' | 'general'>('general');
 
   // Active Letter Modal
   const [selectedLetter, setSelectedLetter] = useState<LoveLetter | null>(null);
@@ -125,13 +131,15 @@ export default function LoveLettersPage() {
     );
   }
 
-  const partnerName = currentUser?.role === 'lakshya'
-    ? coupleSettings?.partner2_name || 'Vishakha'
-    : coupleSettings?.partner1_name || 'Lakshya';
+  const otherMembers = members.filter(m => m.user_id !== currentUser?.id);
+  const recipientName = otherMembers.length > 0 
+    ? (otherMembers[0].member_nickname || otherMembers[0].display_name || 'Friends')
+    : 'Your Future Self';
 
   // Group letters
   const myLetters = loveLetters.filter(l => l.sender_id === currentUser?.id);
-  const partnerLetters = loveLetters.filter(l => l.sender_id !== currentUser?.id);
+  const receivedLetters = loveLetters.filter(l => l.sender_id !== currentUser?.id);
+  const partnerLetters = receivedLetters;
 
   return (
     <main className="max-w-5xl mx-auto px-4 pt-24 pb-12 doodle-bg-dots min-h-screen">
@@ -139,9 +147,9 @@ export default function LoveLettersPage() {
         <span className="material-symbols-outlined text-rose-500 text-5xl animate-bounce mb-2" style={{ fontVariationSettings: "'FILL' 1" }}>
           mail
         </span>
-        <h2 className="font-gloria text-4xl text-primary">Love Letter Vault</h2>
+        <h2 className="font-gloria text-4xl text-primary">Letter Vault &amp; Time Capsules</h2>
         <p className="font-patrick text-lg text-on-surface-variant max-w-lg mt-2">
-          A secret digital drawer to hide handwritten-style letters for {partnerName}. Fill their day with warmth!
+          A cozy digital drawer to hide heartfelt letters and time capsules for {recipientName}. Fill every day with warmth!
         </p>
 
         {/* Tab Switchers */}
@@ -171,16 +179,16 @@ export default function LoveLettersPage() {
 
       {activeTab === 'vault' ? (
         <div className="space-y-12">
-          {/* Letters from Partner */}
+          {/* Received Letters */}
           <div className="taped-paper sketchy-border p-6 bg-white">
             <h3 className="font-gloria text-2xl text-primary mb-4 flex items-center gap-2">
-              <span>💌 Letters from {partnerName}</span>
+              <span>💌 Letters from {recipientName}</span>
               <span className="font-patrick text-sm text-outline-variant">({partnerLetters.length} total)</span>
             </h3>
             
             {partnerLetters.length === 0 ? (
               <p className="font-patrick text-lg text-outline italic text-center py-8">
-                No letters from {partnerName} in the vault yet. Send them a nudge to write one!
+                No letters from {recipientName} in the vault yet. Invite them to write one!
               </p>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -390,7 +398,7 @@ export default function LoveLettersPage() {
               <div className="pl-8 pt-4">
                 <div className="flex justify-between items-center mb-6">
                   <span className="font-patrick text-sm text-outline font-bold">
-                    From: {selectedLetter.sender_id === currentUser?.id ? 'You' : partnerName}
+                    From: {selectedLetter.sender_id === currentUser?.id ? 'You' : (members.find(m => m.user_id === selectedLetter.sender_id)?.member_nickname || members.find(m => m.user_id === selectedLetter.sender_id)?.display_name || 'Collaborator')}
                   </span>
                   <span className="font-patrick text-sm text-outline">
                     Dated: {new Date(selectedLetter.created_at).toLocaleDateString()}

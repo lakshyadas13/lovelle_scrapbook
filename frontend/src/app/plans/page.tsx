@@ -104,9 +104,9 @@ export default function PlansPage() {
           <span className="inline-block px-3 py-0.5 rounded-full bg-primary-container text-on-primary-container font-patrick text-sm mb-2 transform -rotate-1">
             Today, {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
           </span>
-          <h2 className="font-gloria text-3xl text-primary">Today&apos;s Plans</h2>
+          <h2 className="font-gloria text-3xl text-primary">Plans & Activities</h2>
           <p className="font-patrick text-lg text-on-surface-variant mt-2">
-            Sweet moments scheduled just for us. Every plan is a memory in the making.
+            Exciting activities and shared bucket list items. Every plan is a memory in the making.
           </p>
         </div>
         
@@ -126,7 +126,7 @@ export default function PlansPage() {
       {isAddingPlan && (
         <div className="sketchy-card p-6 bg-white rotate-[-0.5deg] mb-8 relative z-30">
           <div className="tape"></div>
-          <h3 className="font-gloria text-xl text-primary mb-4">Add Couple Plan</h3>
+          <h3 className="font-gloria text-xl text-primary mb-4">Add New Plan</h3>
           
           <form onSubmit={handlePlanSubmit} className="space-y-4">
             <div>
@@ -288,7 +288,7 @@ export default function PlansPage() {
             </div>
             <div className="pt-2 select-none">
               <div className="flex justify-between items-center mb-1 font-patrick text-base text-primary">
-                <span>Relationship Goals</span>
+                <span>Activity Goals</span>
                 <span>{relationshipProgress}%</span>
               </div>
               <div className="w-full bg-surface-container h-3 border border-outline rounded-full p-0.5 overflow-hidden">

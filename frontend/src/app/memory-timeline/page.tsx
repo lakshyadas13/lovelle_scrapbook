@@ -15,7 +15,7 @@ const PHOTO_PRESETS = [
 ];
 
 export default function MemoryTimelinePage() {
-  const { currentUser, coupleSettings, memories, addMemory, deleteMemory, isLoading } = useStore();
+  const { currentUser, memories, addMemory, deleteMemory, isLoading } = useStore();
   const [mounted, setMounted] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
 
@@ -99,10 +99,6 @@ export default function MemoryTimelinePage() {
     );
   });
 
-  const partnerName = currentUser?.role === 'lakshya'
-    ? coupleSettings?.partner2_name || 'Vishakha'
-    : coupleSettings?.partner1_name || 'Lakshya';
-
   return (
     <main className="max-w-6xl mx-auto px-4 pt-24 pb-12 doodle-bg-dots min-h-screen">
       {/* Page Header */}
@@ -110,9 +106,9 @@ export default function MemoryTimelinePage() {
         <span className="material-symbols-outlined text-secondary text-5xl animate-spin-slow mb-2" style={{ fontVariationSettings: "'FILL' 1" }}>
           camera
         </span>
-        <h2 className="font-gloria text-4xl text-primary">Our Memory Timeline</h2>
+        <h2 className="font-gloria text-4xl text-primary">Polaroid Memory Timeline</h2>
         <p className="font-patrick text-lg text-on-surface-variant max-w-lg mt-2">
-          Pin memories as wobbly polaroid pictures on our scrapbook board. Relive the golden moments of our journey!
+          Pin memories as wobbly polaroid pictures on your scrapbook board. Relive golden moments and favorite adventures!
         </p>
         
         <button
@@ -136,7 +132,7 @@ export default function MemoryTimelinePage() {
               <span>📅 On This Day Spotlight!</span>
             </h3>
             <p className="font-patrick text-lg text-on-surface-variant mb-6">
-              Look back at what you and {partnerName} were doing on this exact date in past years!
+              Look back at what was recorded in your scrapbook on this exact date in past years!
             </p>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-center items-center">

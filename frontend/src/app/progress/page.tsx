@@ -90,7 +90,7 @@ export default function HeartTapperPage() {
 
       {/* Score Dashboard Card */}
       <div className="scrapbook-card px-8 py-5 rounded-sm text-center bg-white z-10 select-none relative mb-12">
-        <p className="font-patrick text-sm text-on-surface-variant uppercase tracking-widest">Love Counter</p>
+        <p className="font-patrick text-sm text-on-surface-variant uppercase tracking-widest">Cheer Counter</p>
         <div className={`font-gloria text-5xl md:text-6xl text-primary tabular-nums ${isPopping ? 'counter-pop' : ''}`}>
           {userTapCount}
         </div>
@@ -130,9 +130,9 @@ export default function HeartTapperPage() {
 
       {/* Subtext info */}
       <div className="mt-16 text-center max-w-xs z-10">
-        <p className="font-gloria text-2xl text-primary mb-3">How much I missed you...</p>
+        <p className="font-gloria text-2xl text-primary mb-3">Send Joy &amp; Appreciation ✨</p>
         <p className="font-patrick text-lg text-on-surface-variant leading-relaxed">
-          Every tap is a heartbeat across the distance. Keep tapping to fill the world with sparkles.
+          Every tap is a little burst of joy and celebration. Keep tapping to fill your scrapbook with sparkles!
         </p>
       </div>
     </main>

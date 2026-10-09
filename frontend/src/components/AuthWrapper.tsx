@@ -5,31 +5,33 @@ import { useStore } from '@/store/useStore';
 import { useRouter, usePathname } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 
+const PUBLIC_ROUTES = ['/', '/login'];
+
 export default function AuthWrapper({ children }: { children: React.ReactNode }) {
   const { 
     currentUser, 
+    activeScrapbook,
     setSession, 
-    fetchInitialData, 
+    fetchUserScrapbooks, 
     subscribeRealtime, 
     isLoading 
   } = useStore();
   const router = useRouter();
   const pathname = usePathname();
 
-  // 1. Initialize session and subscribe to auth state changes
+  // 1. Initialize session and listen for auth changes
   useEffect(() => {
-    // Verify check
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       if (session) {
-        fetchInitialData();
+        fetchUserScrapbooks();
       }
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
       if (session) {
-        fetchInitialData();
+        fetchUserScrapbooks();
       } else {
         setSession(null);
       }
@@ -38,32 +40,30 @@ export default function AuthWrapper({ children }: { children: React.ReactNode })
     return () => {
       subscription.unsubscribe();
     };
-  }, [setSession, fetchInitialData]);
+  }, [setSession, fetchUserScrapbooks]);
 
-  // 2. Real-time subscription when user is authenticated
+  // 2. Real-time subscription when active scrapbook changes
   useEffect(() => {
-    if (currentUser?.couple_id) {
+    if (activeScrapbook?.id) {
       const unsubscribe = subscribeRealtime();
       return () => {
         unsubscribe();
       };
     }
-  }, [currentUser?.couple_id, subscribeRealtime]);
+  }, [activeScrapbook?.id, subscribeRealtime]);
 
   // 3. Navigation protection
   useEffect(() => {
     if (isLoading) return;
 
+    const isPublic = PUBLIC_ROUTES.includes(pathname);
+
     if (pathname === '/login') {
-      if (currentUser?.couple_id) {
+      if (currentUser) {
         router.push('/');
       }
-    } else {
-      if (!currentUser) {
-        router.push('/login');
-      } else if (!currentUser.couple_id) {
-        router.push('/login');
-      }
+    } else if (!isPublic && !currentUser) {
+      router.push('/login');
     }
   }, [currentUser, pathname, router, isLoading]);
 

@@ -33,8 +33,8 @@ const cabinSketch = Cabin_Sketch({
 });
 
 export const metadata: Metadata = {
-  title: "VB's Scrapbook",
-  description: 'A cozy, wobbly handwritten scrapbook of love, mood sharing, and couple memories.',
+  title: 'Lovelle Scrapbook',
+  description: 'A cozy, wobbly handwritten digital scrapbook for cherished moments, daily highlights, and shared memories.',
 };
 
 export const viewport = {

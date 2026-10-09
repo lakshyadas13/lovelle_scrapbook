@@ -4,20 +4,24 @@ import { useState } from 'react';
 import { useStore, Oopsie } from '@/store/useStore';
 import { triggerSparkles } from '@/utils/sparkles';
 
-export default function OopsieCornerPage() {
-  const { oopsies, addOopsie, promiseOopsie, deleteOopsie, currentUser, loveTaps } = useStore();
+export default function ThingsToWorkOnPage() {
+  const { oopsies, addOopsie, promiseOopsie, deleteOopsie, currentUser, members } = useStore();
   const [isLogging, setIsLogging] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [tagsStr, setTagsStr] = useState('');
   const [imageUrl, setImageUrl] = useState('');
-  const [oopsieOwner, setOopsieOwner] = useState<'me' | 'partner'>('me');
+  const [selectedUserId, setSelectedUserId] = useState<string>('');
 
   const getOopsieLabel = (oopsUserId: string) => {
     if (oopsUserId === currentUser?.id) {
-      return "oopsie by me";
+      return "committed by me";
     }
-    return currentUser?.role === 'lakshya' ? "oopsie by her" : "oopsie by him";
+    const member = members.find(m => m.user_id === oopsUserId);
+    if (member) {
+      return `by ${member.member_nickname || member.display_name || 'Collaborator'}`;
+    }
+    return "by collaborator";
   };
 
   // Stats calculation
@@ -50,15 +54,14 @@ export default function OopsieCornerPage() {
       .map(t => t.trim())
       .filter(t => t.length > 0);
 
-    const partnerTap = loveTaps.find(t => t.user_id !== currentUser.id);
-    const partnerId = partnerTap ? partnerTap.user_id : '11111111-1111-1111-1111-111111111111';
+    const targetUser = selectedUserId || currentUser.id;
 
     addOopsie({
       title,
       description,
       tags,
       image_url: imageUrl.trim() || null,
-      user_id: oopsieOwner === 'me' ? currentUser.id : partnerId,
+      user_id: targetUser,
     });
 
     // Reset form
@@ -66,7 +69,7 @@ export default function OopsieCornerPage() {
     setDescription('');
     setTagsStr('');
     setImageUrl('');
-    setOopsieOwner('me');
+    setSelectedUserId('');
     setIsLogging(false);
 
     // Trigger success sparkles
@@ -128,30 +131,33 @@ export default function OopsieCornerPage() {
               />
             </div>
             <div>
-              <label className="font-patrick text-base text-primary block mb-1.5">Whose oopsie is this?</label>
-              <div className="flex gap-4">
+              <label className="font-patrick text-base text-primary block mb-1.5">Who is working on this?</label>
+              <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
-                  onClick={() => setOopsieOwner('me')}
-                  className={`sketchy-border px-5 py-2 font-patrick text-lg transition-all ${
-                    oopsieOwner === 'me'
+                  onClick={() => setSelectedUserId(currentUser?.id || '')}
+                  className={`sketchy-border px-4 py-1.5 font-patrick text-base transition-all ${
+                    (!selectedUserId || selectedUserId === currentUser?.id)
                       ? 'bg-primary text-white scale-102 font-bold'
                       : 'bg-white text-on-surface hover:bg-surface-container'
                   }`}
                 >
-                  🙋‍♂️ Mine (Me)
+                  🙋 Mine ({currentUser?.display_name || 'Me'})
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setOopsieOwner('partner')}
-                  className={`sketchy-border px-5 py-2 font-patrick text-lg transition-all ${
-                    oopsieOwner === 'partner'
-                      ? 'bg-secondary text-white scale-102 font-bold'
-                      : 'bg-white text-on-surface hover:bg-surface-container'
-                  }`}
-                >
-                  {currentUser?.role === 'lakshya' ? '🙋‍♀️ Hers (Vishakha)' : '🙋‍♂️ His (Lakshya)'}
-                </button>
+                {members.filter(m => m.user_id !== currentUser?.id).map(m => (
+                  <button
+                    key={m.id}
+                    type="button"
+                    onClick={() => setSelectedUserId(m.user_id)}
+                    className={`sketchy-border px-4 py-1.5 font-patrick text-base transition-all ${
+                      selectedUserId === m.user_id
+                        ? 'bg-secondary text-white scale-102 font-bold'
+                        : 'bg-white text-on-surface hover:bg-surface-container'
+                    }`}
+                  >
+                    🤝 {m.member_nickname || m.display_name}
+                  </button>
+                ))}
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

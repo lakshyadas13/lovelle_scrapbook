@@ -6,7 +6,7 @@ import { triggerSparkles } from '@/utils/sparkles';
 import { compressImage } from '@/utils/image';
 
 export default function GoodThingsPage() {
-  const { goodThings, addGoodThing, deleteGoodThing, currentUser, loveTaps, coupleSettings } = useStore();
+  const { goodThings, addGoodThing, deleteGoodThing, currentUser, loveTaps, members } = useStore();
   const [inputText, setInputText] = useState('');
   const [descriptionText, setDescriptionText] = useState('');
   const [activeTag, setActiveTag] = useState<string>('SmallJoy');
@@ -16,21 +16,13 @@ export default function GoodThingsPage() {
   // Helper to determine who wrote the note
   const getAuthorName = (noteUserId: string) => {
     if (!currentUser) return 'Someone';
+    if (noteUserId === currentUser.id) return currentUser.display_name || 'Me';
 
-    const MOCK_ID = '00000000-0000-0000-0000-000000000000';
-    const isMe = noteUserId === currentUser.id ||
-      (currentUser.id === MOCK_ID && noteUserId === MOCK_ID) ||
-      (currentUser.role === 'partner' && noteUserId === 'partner');
-
-    if (isMe) {
-      return currentUser.display_name || 'Me';
-    } else {
-      if (currentUser.role === 'lakshya') {
-        return coupleSettings?.partner2_name || 'Vishakha';
-      } else {
-        return coupleSettings?.partner1_name || 'Lakshya';
-      }
+    const member = members.find((m) => m.user_id === noteUserId);
+    if (member) {
+      return member.member_nickname || member.display_name || 'Collaborator';
     }
+    return 'Doodle Friend';
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,27 +41,27 @@ export default function GoodThingsPage() {
     }
   };
 
-  // Secret Surprises Milestones Logic
+  // Milestones Logic
   const totalLoveTapsCombined = loveTaps.reduce((acc, curr) => acc + curr.count, 0);
 
   const milestones = [
     {
       target: 100,
       title: 'Sweet Beginning 🍨',
-      desc: 'Keep tapping the heart to unlock a sweet treats milestone surprise.',
-      voucher: "SECRET COUPLE VOUCHER: 'One Free Late Night Ice Cream Run & Infinite Back Rubs.' Valid forever! ✨",
+      desc: 'Reach 100 taps to unlock a sweet treats milestone achievement.',
+      voucher: "MILESTONE REWARD: 'One cozy bakery or coffee run + an afternoon of uninterrupted reading/relaxing.' Valid anytime! ✨",
     },
     {
       target: 500,
       title: 'Deep Connection 🎬',
-      desc: 'Unlock this once you reach 500 total taps to claim a cozy weekend treat.',
-      voucher: "SECRET COUPLE VOUCHER: 'A Lazy Sunday Movie Marathon with home-cooked meals served by your partner.' 🍿",
+      desc: 'Reach 500 total taps to claim a cozy movie marathon reward.',
+      voucher: "MILESTONE REWARD: 'A cozy Sunday movie marathon with home-made popcorn & favorite snacks.' 🍿",
     },
     {
       target: 1000,
-      title: 'Infinite Love ✈️',
-      desc: 'The ultimate milestone reward at 1000 total combined love taps!',
-      voucher: "SECRET COUPLE VOUCHER: 'A Weekend Getaway trip planned and funded by the other partner + a handmade letter.' 💖",
+      title: 'Grand Milestone ✈️',
+      desc: 'The ultimate milestone reward at 1000 total combined taps!',
+      voucher: "MILESTONE REWARD: 'A celebratory day-trip adventure or special dinner together!' 💖",
     }
   ];
 
@@ -341,7 +333,7 @@ export default function GoodThingsPage() {
                   {/* Vintage cancellation postmark stamp */}
                   <div className="absolute -top-3 -left-3 w-10 h-10 border border-dashed border-slate-700/35 rounded-full flex items-center justify-center -rotate-12 pointer-events-none select-none text-[6px] font-patrick text-slate-700/35 font-bold leading-none bg-white/20 backdrop-blur-[0.5px]">
                     <div className="text-center">
-                      <div>VB LOVE</div>
+                      <div>LOVELLE</div>
                       <div className="text-[5px] mt-0.5">POST</div>
                     </div>
                   </div>
